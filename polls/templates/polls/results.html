@@ -6,4 +6,11 @@
     {% endfor %}
 </ul>
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a> <br> <br>
+
+{% if next_question %}
+<a href="{% url 'polls:detail' next_question.id %}">Next question?</a>
+{%else%}
+You've completed! Thanks for polling! <br>
+<a href="{% url 'home' %}">Go to Home</a> <br> <br>
+{% endif %}
