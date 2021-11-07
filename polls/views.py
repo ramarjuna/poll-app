@@ -8,7 +8,7 @@ from django.urls import reverse
 # Create your views here.
 def index(request):
   # return HttpResponse('Hello World, You"re in Polls Home Page')
-  latest_question_list = Question.objects.order_by('-pub_date')[:5]
+  latest_question_list = Question.objects.order_by('pub_date')[:5]
   # output = (', '.join([q.question_text for q in latest_question_list]))
   template = loader.get_template('polls/index.html')
   context = {
@@ -36,6 +36,8 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        print(selected_choice)
+        print(selected_choice.votes)
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
@@ -50,3 +52,7 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        
+def overall_results(request):
+  question = Question.objects.all()
+  return render(request, 'polls/overall_results.html', {'question' : question})

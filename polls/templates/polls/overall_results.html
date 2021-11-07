@@ -1,0 +1,18 @@
+{% if question %}
+
+{% for q in question %}
+
+<h1> {{ q.question_text }} </h1>
+
+{% for choice in q.choice_set.all %}
+
+<table>
+    <tr> {{ choice.choice_text }} </tr> &nbsp; &nbsp; &nbsp;
+    <tr> {{ choice.votes }} </tr>
+</table>
+
+{% endfor %}
+
+{% endfor %}
+
+{% endif %}
